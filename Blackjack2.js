@@ -15,12 +15,6 @@ let hitBT = false;
 let standBT = false;
 let outGame = true;
 
-
-
-
-//let age = 30;
-//--change
-
 let messageElem1 = document.getElementById("message1");
 let messageElem2 = document.getElementById("message2");
 let messageElem3 = document.getElementById("message3");
@@ -49,22 +43,6 @@ class Player{
   }
 
 }
-
-
-
-
-/*
-function admitToClub(){
-  let admit = false;
-
-  if(age <=22) {    
-    console.log("You cannot enter the club");    
-  }else{
-    console.log("Welcome!")
-    admit=true; 
-  }
-  return admit;
-} */
 
 function render(){
   cardsElem.textContent = "Cards in hand: "+ showCards(inHandCards);
@@ -115,12 +93,6 @@ function addCardValue(card){
   sum += thisCardValue;
   render();
 }
-
-/*function sumCards(cards){
-  cards.forEach(addCardValue);
-  return sum;
-}*/
-
 
 function hit(){    //ask for another card
   
@@ -223,8 +195,3 @@ function reset(){
   standBT = false;
   outGame = true;
 }
-
-//let data = getPlayerData();
-//createPlayer("Carl", 56);
-//startGame();
-//check();

@@ -11,10 +11,13 @@ body{
 
 }
 h1{
-    color: rgb(0, 0, 0);
+    font-family: "Courier New";
+    color: rgb(255, 255, 255);
+    font-size: 56px;
+    line-height: 60%;
 }
 i{
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 22px;
 }
 #message1{
