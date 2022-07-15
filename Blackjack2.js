@@ -65,9 +65,8 @@ function showCards(cardsToShow){
   for (let i in cardsToShow){
     cardString = i.suit+i.number.toString();
   }
-  cardsElem.textContent = "Cards: " + cardString;
-  sumElem.textContent = "Sum: " + sum;
-
+  
+  return cardString;
 }
 
 function fillDealerDeck(){
@@ -84,7 +83,7 @@ function fillDealerDeck(){
 
 function drawACard(){
   let selectedCardIndex = Math.floor(Math.random() * dealerDeck.length);
-  const selectedCard = dealerDeck[selectedCardIndex];
+  let selectedCard = dealerDeck[selectedCardIndex];
   dealerDeck.splice(selectedCardIndex, 1);
   inHandCards.push(selectedCard);
 }
@@ -175,16 +174,17 @@ function start(){
   messageElem3.textContent =  "First time an Ace card appears it is going to get value 11"
   messageElem4.textContent = "In the next appeareances it will be 1.";
   messageElem5.textContent = "Let's play, Good luck!";
-  //button1.name = "Got it!";
-  //startGame();
 }
   
 function startGame(){
+
   clearLines();
   fillDealerDeck();  
   drawACard();
-  drawACard();
-  showCards(inHandCards);
+  drawACard(); 
+  messageElem1.textContent = "Here are your 2 initial cards...";   
+  cardsElem.textContent = "Cards: " + showCards(inHandCards);
+  sumElem.textContent = "Sum: " + sum;;
   check();  
 }
 
