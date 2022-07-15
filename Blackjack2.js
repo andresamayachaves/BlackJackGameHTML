@@ -1,5 +1,5 @@
 const cardNums =["A","2","3","4","5","6","7","8","9","10","J","Q","K"];  
-const suits = ["Heart", "Diamond", "Ace", "Clover"]
+const suits = ["Heart", "Diamond", "Spades", "Clover"]
 
 const valuesForCards = [11,2,3,4,5,6,7,8,9,10,10,10,10];
 
@@ -131,7 +131,7 @@ function check(action){
   if(sum<=21 && action==="hit"){
     messageElem1.textContent = "Press 'hit' again to draw a new card, or press 'stand' to play with these cards"; 
   }else if(sum>=18 && sum<=21 && action==="stand"){  
-    wonRound("");  
+    wonRound(""); 
   } else{
     earned = 0;    
     endGame();
