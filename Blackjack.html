@@ -5,18 +5,19 @@
     <body>
         <h1> SOFKA HOLD'EM </h1>
         <h1> BLACKJACK </h1>            
-        <button onclick="start()"> START NEW GAME</button><br><br>
-        <button onclick="startGame()"> CONTINUE</button> <br><br> 
+        <button onclick="instructions()"> INSTRUCTIONS </button><br><br>
+        <button onclick="startGame()"> START NEW GAME</button> <br><br> 
+        <button onclick="reset()"> RESET </button> <br><br> 
         <button onclick="hit()">HIT</button>
         <button onclick="stand()">STAND</button> 
-          
-        <p id="message1">Hello! Feeling lucky? Give it a Try!</p>
-        <p id="message2"></p>
-        <p id="message3"></p>
-        <p id="message4"></p>
-        <p id="message5"></p> <br>
-        <p id="cards-elem">Cards: -</p>
-        <p id="sum-elem">Sum: -</p>   
+        <br><br>
+        <p id="cards-elem">Cards in hand: -</p>
+        <p id="sum-elem">Sum: -</p><br>   
+        <i id="message1">Hello! Feeling lucky? Give it a Try!</i>
+        <i id="message2"></i><br>
+        <i id="message3"></i><br>
+        <i id="message4"></i><br>
+        <i id="message5"></i>
         <script src="Blackjack2.js"></script>   
     </body>
 </html>

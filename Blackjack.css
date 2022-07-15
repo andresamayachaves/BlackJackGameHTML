@@ -6,11 +6,16 @@ body{
     background-size: 100% 100%;    
     text-align: center;
     color: rgb(255, 255, 255);
+    font-size: 20px;
     font-weight: bold;
 
 }
 h1{
     color: rgb(0, 0, 0);
+}
+i{
+    color: rgb(0, 0, 0);
+    font-size: 22px;
 }
 #message1{
     font-style: italic;;

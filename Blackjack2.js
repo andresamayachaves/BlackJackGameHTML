@@ -1,14 +1,20 @@
 const cardNums =["A","2","3","4","5","6","7","8","9","10","J","Q","K"];  
 const suits = ["Heart", "Diamond", "Ace", "Clover"]
 
-const valuesForCards = [11,2,3,4,5,6,7,8,9,10,11,12,13];
+const valuesForCards = [11,2,3,4,5,6,7,8,9,10,10,10,10];
 
 let sum = 0;
 let dealerDeck = [];
 
 let inHandCards = [];
 let acesInHand = 0;
-let Earned = 0;
+let earned = 0;
+let instructionsBT = true;
+let startGameBT = true;
+let hitBT = false;
+let standBT = false;
+let outGame = true;
+
 
 
 
@@ -60,25 +66,33 @@ function admitToClub(){
   return admit;
 } */
 
+function render(){
+  cardsElem.textContent = "Cards in hand: "+ showCards(inHandCards);
+  sumElem.textContent = "Sum: " + sum;
+}
+
 function showCards(cardsToShow){
-  let cardString = "";
-  for (let i in cardsToShow){
-    cardString = i.suit+i.number.toString();
+  let cardString = cardsToShow[0][0]+"-"+cardsToShow[0][1].toString();
+  for (let i = 1; i<cardsToShow.length; i++){
+    cardString = cardString + ", " + cardsToShow[i][0]+"-"+cardsToShow[i][1].toString();
   }
   
   return cardString;
 }
 
+let z=0;
+
 function fillDealerDeck(){
   for (let i in suits){
-    for (let j in cardNums){
-      for (let k in valuesForCards){
-        let cardX = new Card(i,j,k);
-        dealerDeck.push(cardX);
-      };
-    }
+    z=0;
+    for (let j in cardNums){      
+      let cardX = new Card(suits[i],cardNums[j],valuesForCards[z]);      
+      dealerDeck.push([cardX.suit, cardX.number, cardX.value]);
+      z++;
+    };
   }
 }
+
 
 
 function drawACard(){
@@ -86,72 +100,71 @@ function drawACard(){
   let selectedCard = dealerDeck[selectedCardIndex];
   dealerDeck.splice(selectedCardIndex, 1);
   inHandCards.push(selectedCard);
+  addCardValue(selectedCard);
 }
 
 function addCardValue(card){
   if (acesInHand >= 1){
-    var thisCardValue = card.value;
-  } else if (card.number==="A"){
+    var thisCardValue = card[2];
+  } else if (card[1]==="A"){
     thisCardValue = 1;
     acesInHand += 1;
   }
-  else{thisCardValue = card.value;}
+  else{thisCardValue = card[2];}
   
   sum += thisCardValue;
+  render();
 }
 
-function sumCards(cards){
+/*function sumCards(cards){
   cards.forEach(addCardValue);
   return sum;
-}
+}*/
 
 
 function hit(){    //ask for another card
-    
+  
+  if(outGame == false){
     clearLines()
     drawACard();
     messageElem1.textContent = "Here's your new card...";
-    sum = sumCards(inHandCards);
-  
-    messageElem1textContent = "Cards in hand: " + showCards(inHandCards);
-    messageElem1.textContent = "Sum: " + sum.toString;
-
-    check();
+    render();
+    check('hit');
+  }
 
 }
 
 function stand(){
-
-  drawACard();
-  sum = sumCards(inHandCards);
-
-  cardsElem.textContent = "Cards in hand: " + showCards(inHandCards);
-  sumElem.textContent = "Sum: " + sum.toString;
+  messageElem1.textContent = "Let's check your cards...";
+  render();
+  check('stand');
 }
 
 
 function endGame(){
   messageElem1.textContent = "Game finished.";
-  messageElem2.textContent = message;"You won $" + Earned.toString;
+  messageElem2.textContent = "You won $" + earned.toString();
+  outGame() = true;
+  earned = 0;
 }
 
 function wonRound(messagePart){
+  earned += 1000;
   messageElem1.textContent = messagePart + "You won this round. + $1000!";
-  Earned += 1000;
+  endGame();
 }
 
-function check(){
-  let message = "";
-  if(sum<=21){
-    message = "Press 'hit' to draw a new card, or press 'stand' to play with these cards"; 
-  }else if(sum===21){wonRound("BLACKJACK! ");
-  }else if (sum>=18){wonRound("");
-  }else{
-    message = "Sorry, you lose your bet.";
-    Earned = 0;
+function check(action){
+
+  if(sum<=21 && action==="hit"){
+    messageElem1.textContent = "Press 'hit' again to draw a new card, or press 'stand' to play with these cards"; 
+  }else if(sum>=18 && sum<=21 && action==="stand"){  
+    wonRound("");  
+  } else{
+    earned = 0;    
     endGame();
+    messageElem1.textContent = "Sorry, you lose your bet.";
   } 
-  messageElem1.textContent = message;
 }
 
 function clearLines(){
@@ -165,29 +178,51 @@ function clearLines(){
 
 
 
-function start(){
-  
-  messageElem1.textContent = "You'll begin with 2 random cards, then you have to decide if you\
-  draw 1 more each time."
-  messageElem2.textContent = "You win only if your cards sum up between 18 and 21, \
-  otherwise you lose."
-  messageElem3.textContent =  "First time an Ace card appears it is going to get value 11"
-  messageElem4.textContent = "In the next appeareances it will be 1.";
-  messageElem5.textContent = "Let's play, Good luck!";
+function instructions(){
+  if(outGame){
+    messageElem1.textContent = "You'll begin with 2 random cards, then you have to decide if you\
+    draw 1 more each time."
+    messageElem2.textContent = "You win only if your cards sum up between 18 and 21, \
+    otherwise you lose."
+    messageElem3.textContent =  "First time an Ace card appears it is going to get value 11"
+    messageElem4.textContent = "In the next appeareances it will be 1.";
+    messageElem5.textContent = "Let's play, Good luck!";
+  }
 }
   
 function startGame(){
 
-  clearLines();
-  fillDealerDeck();  
-  drawACard();
-  drawACard(); 
-  messageElem1.textContent = "Here are your 2 initial cards...";   
-  cardsElem.textContent = "Cards: " + showCards(inHandCards);
-  sumElem.textContent = "Sum: " + sum;;
-  check();  
+  if(outGame==true){
+    outGame = false;
+    clearLines();  
+    fillDealerDeck();
+    drawACard();
+    drawACard();
+    
+    messageElem1.textContent = "Here are your 2 initial cards...";   
+    render();
+  }
+
 }
 
+function reset(){
+  //clearLines();
+  messageElem1.textContent = "Hello! Feeling lucky? Give it a Try!";
+  cardsElem.textContent = "Cards in hand: -";
+  sumElem.textContent = "Sum: -";
+
+  sum = 0;
+  dealerDeck = [];
+
+  inHandCards = [];
+  acesInHand = 0;
+  earned = 0;
+  instructionsBT = true;
+  startGameBT = true;
+  hitBT = false;
+  standBT = false;
+  outGame = true;
+}
 
 //let data = getPlayerData();
 //createPlayer("Carl", 56);
